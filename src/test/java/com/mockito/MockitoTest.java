@@ -23,4 +23,15 @@ public class MockitoTest {
         boolean check=classTest.query("* from classTest");
         Assert.assertTrue(check);
     }
+
+    @Test
+    public void customer() {
+        Customer customer=new Customer("sampada","prabhu");
+        EntityManager entityManager=mock(EntityManager.class);
+        when(entityManager.find(Customer.class,1L)).thenReturn(customer);
+        CustomerReader customerReader=new CustomerReader();
+        customerReader.setEntityManager(entityManager);
+        String fullName = customerReader.findFullName(1);
+        Assert.assertEquals("sampada prabhu",fullName);
+    }
 }
